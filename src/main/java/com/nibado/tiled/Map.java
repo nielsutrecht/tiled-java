@@ -1,6 +1,9 @@
 package com.nibado.tiled;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,15 +24,6 @@ public class Map {
     List<TileSet> tileSets;
 
     private List<Layer> layers;
-
-    public static Map read(final File file) {
-        try {
-            return new ObjectMapper().readValue(file, Map.class);
-        }
-        catch (final Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public int getHeight() {
         return height;
@@ -111,5 +105,17 @@ public class Map {
 
     public void setProperties(final java.util.Map properties) {
         this.properties = properties;
+    }
+
+    public static Map read(final File file) throws IOException {
+        return read(new FileInputStream(file));
+    }
+
+    public static Map read(final String fileName) throws IOException {
+        return read(new File(fileName));
+    }
+
+    public static Map read(final InputStream ins) throws IOException {
+        return new ObjectMapper().readValue(ins, Map.class);
     }
 }

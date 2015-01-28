@@ -3,12 +3,13 @@ package com.nibado.tiled;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.junit.Test;
 
 public class MapTest {
     @Test
-    public void testRead() {
+    public void testRead() throws IOException {
         final Map map = Map.read(new File("src/test/resources/world-1-1.json"));
 
         assertEquals(40, map.getHeight());
